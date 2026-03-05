@@ -1,0 +1,92 @@
+/* General body css */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+/* Container of banner and nav bar */
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Navigation Section */
+#navigation{
+    display: flex;
+    justify-content: center;
+    background-color: lightblue;
+    gap: 40px;
+    padding: 15px;
+}
+.nav{
+    text-decoration: none;
+    font-weight: bold;
+    color: #0077be;
+}
+
+
+/* About section */
+/* .About_image img{
+    width: 100%;
+    height: auto;
+}  */
+/* Beach Section */
+#Beach{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px;
+    background-color: lightblue;
+}
+#beach-name{
+    flex: 2;
+    padding: 12px;
+    border: 2px solid #add8e6;
+    border-radius: 25px;
+    outline: none;
+
+}
+#search-btn{
+    flex: 1;
+    padding: 12px 20px;
+    background-color: #0077be;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background 0.3s;
+}
+/* Weather Section */
+#Weather{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+.localWeather{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+.localWeather ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.weatherCard{
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px black;
+    min-width: 200px;
+    text-align: center;
+}

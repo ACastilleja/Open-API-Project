@@ -21,7 +21,6 @@ document.body.appendChild(footer);
 // Weather API
 const searchBtn = document.getElementById('search-btn');
 const beachInput = document.getElementById('beach-name');
-// const displayWeather = document.getElementById('localWeather');
 const weatherContainer = document.querySelector('.localWeather');
 
 searchBtn.addEventListener('click', async ()=> {
@@ -61,7 +60,7 @@ searchBtn.addEventListener('click', async ()=> {
         const currentUV = weatherData.hourly.uv_index[0];
         console.log(`UV Index: ${currentUV}`);
 
-        //const weatherContainer = document.querySelector('.localWeather');
+        
         const weatherList = document.createElement('ul');
 
         const displayData = [
@@ -81,7 +80,7 @@ searchBtn.addEventListener('click', async ()=> {
 
         weatherContainer.textContent = '';
         weatherContainer.appendChild(weatherList);
-
+        weatherContainer.classList.add("weatherCard"); 
 
     } 
     
@@ -89,13 +88,21 @@ searchBtn.addEventListener('click', async ()=> {
     
     catch (error){
         console.log("Error",error);
-        weatherContainer.textContent = "Unable to loach weather";
+        weatherContainer.textContent = "Something went wrong. Unable to load weather";
         
     }
 
 
 });
 
+
+
+
+
+
+
+
+// OLD API command
 // async function getWeather(){
 //     try{
 //         const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=27.7253&longitude=-82.7412&daily=uv_index_max,weather_code&current=temperature_2m,wind_gusts_10m,precipitation&timezone=America%2FNew_York&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch");
