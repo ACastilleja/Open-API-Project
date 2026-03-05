@@ -18,11 +18,12 @@ footer.classList.add('footer');
 footer.appendChild(copyright);
 document.body.appendChild(footer);
 
-// Weather API
+// Getting html elements for DOM
 const searchBtn = document.getElementById('search-btn');
 const beachInput = document.getElementById('beach-name');
 const weatherContainer = document.querySelector('.localWeather');
 
+//Creating Eventlistener for searchBtn for Beach input
 searchBtn.addEventListener('click', async ()=> {
 
     const beachName = beachInput.value;
@@ -33,6 +34,7 @@ searchBtn.addEventListener('click', async ()=> {
     }
     
     try {
+        // Geolocation API
         const geoRes = await fetch (`https://geocoding-api.open-meteo.com/v1/search?name=${beachName}&count=1&language=en&format=json&countryCode=US`);
         const geoData = await geoRes.json();
         console.log(geoData);
@@ -42,58 +44,67 @@ searchBtn.addEventListener('click', async ()=> {
             return;
         }
 
+        //geo API json data variable
         const {latitude, longitude, name, admin1 } = geoData.results[0];
         console.log(latitude, longitude, name, admin1);
-
-        const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation_probability,temperature_2m,uv_index,wind_gusts_10m,cloud_cover&current=temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover,showers&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
+        // Current Weather API
+        const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=precipitation_probability,temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
         const weatherData = await weatherRes.json();
         console.log(weatherData);
+        // Current UV index API
+        const uvRes = await fetch (`https://currentuvindex.com/api/v1/uvi?latitude=${latitude}&longitude=${longitude}`);
+        const uvIndex = await uvRes.json();
+        console.log(uvIndex);
 
+        //Weather variables
         const temp = weatherData.current.temperature_2m;
         console.log(`Temperature: ${temp}F`);
         const realFeel = weatherData.current.apparent_temperature;
         console.log(`Real Feel: ${realFeel}F`);
-        const currentPrecip = weatherData.hourly.precipitation_probability[0];
+        const currentPrecip = weatherData.current.precipitation_probability;
         console.log(`Rain Chance: ${currentPrecip}%`);
         const gust = weatherData.current.wind_gusts_10m;
         console.log(`Wind Gust: ${gust}mph`);
-        const currentUV = weatherData.hourly.uv_index[0];
+        const cloudCover = weatherData.current.cloud_cover;
+        console.log(`Cloud Cover= ${cloudCover}`);
+        const currentUV = uvIndex.now.uvi;
         console.log(`UV Index: ${currentUV}`);
-
         
+        
+        //Creating ul list element
         const weatherList = document.createElement('ul');
-
+    
+        //Creating data array to use with for Each loop
         const displayData = [
             `Location: ${name}, ${admin1}`,
             `Temperatur: ${temp}°F`,
             `Real Feel: ${realFeel}°F`,
             `Wind Gust: ${gust}mph`,
             `Rain Probability: ${currentPrecip}%`,
+            `Cloud Cover: ${cloudCover}%`,
             `UV Index: ${currentUV}`
-
+            
         ];
+        // for Each loop to create li element
         displayData.forEach ( text =>{
             const li = document.createElement('li');
             li.textContent = text;
             weatherList.appendChild(li);
         });
 
+        //appending Weatherlist li list to HTML and adding a class for css
         weatherContainer.textContent = '';
         weatherContainer.appendChild(weatherList);
         weatherContainer.classList.add("weatherCard"); 
 
-    } 
-    
-    
-    
-    catch (error){
+    } catch (error){
         console.log("Error",error);
         weatherContainer.textContent = "Something went wrong. Unable to load weather";
         
     }
 
 
-});
+});//end of searchBtn eventlistener
 
 
 
