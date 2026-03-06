@@ -1,0 +1,154 @@
+/* General body css */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    
+    font-family: "Fredoka", sans-serif;
+    font-weight: 400;
+    
+}
+h2{
+    font-family: "Fredoka", sans-serif;
+    font-weight: 500;
+    
+}
+
+/* Container of banner and nav bar */
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Navigation Section */
+#navigation{
+    display: flex;
+    justify-content: center;
+    background-color: lightblue;
+    gap: 60px;
+    padding: 20px;
+    /* margin-top: 10px; */
+}
+.nav{
+    font-size: 2rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: #0077be;
+}
+
+
+/* About section */
+.About_image img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+} 
+/* Beach Section */
+#Beach{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px;
+    background-color: lightblue;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+#beach-name{
+    flex: 2;
+    padding: 12px;
+    border: 2px solid #add8e6;
+    border-radius: 25px;
+    outline: none;
+
+}
+.beachSearch{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+#search-btn{
+    flex: 1;
+    padding: 12px 20px;
+    background-color: #0077be;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+/* Weather Section */
+.placeholder-img{
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
+#Weather{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+.localWeather{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+.localWeather ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.weatherCard{
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px black;
+    min-width: 200px;
+    text-align: center;
+}
+/* shell border */
+/* #About, #Beach, #Weather{
+    position: relative;
+    padding-bottom: 60px;
+    margin-bottom: 20px;
+    border: none;
+}
+#About::after, #Beach::after, #Weather::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    height: 20px;
+    background-image: url('../images/shell.jpg');
+    background-repeat: repeat-x;
+    background-size: contain;
+}
+#navigation{
+    position: relative;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+    border: none;
+}
+#navigation::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    height: 20px;
+    background-image: url('../images/shell.jpg');
+    background-repeat: repeat-x;
+    background-size: contain;
+} */
