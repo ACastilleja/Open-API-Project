@@ -31,10 +31,11 @@ body {
 
 
 /* About section */
-/* .About_image img{
+.About_image img{
     width: 100%;
-    height: auto;
-}  */
+    height: 300px;
+    object-fit: cover;
+} 
 /* Beach Section */
 #Beach{
     display: flex;
@@ -43,6 +44,8 @@ body {
     text-align: center;
     padding: 50px 20px;
     background-color: lightblue;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 #beach-name{
     flex: 2;
@@ -51,6 +54,11 @@ body {
     border-radius: 25px;
     outline: none;
 
+}
+.beachSearch{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 #search-btn{
     flex: 1;
@@ -61,8 +69,17 @@ body {
     cursor: pointer;
     border-radius: 25px;
     transition: background 0.3s;
+    margin-top: 10px;
 }
 /* Weather Section */
+.placeholder-img{
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    border: 1px solid gray;
+}
 #Weather{
     display: flex;
     flex-direction: column;
