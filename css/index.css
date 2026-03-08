@@ -70,7 +70,7 @@ h2{
     flex-direction: column;
     text-align: left;
 }
-#search-btn, #forecast-btn{
+#search-btn, #forecast-btn, #reset-btn{
     flex: 1;
     padding: 12px 20px;
     background-color: #0077be;
@@ -80,6 +80,10 @@ h2{
     border-radius: 25px;
     transition: background 0.3s;
     margin-top: 10px;
+}
+#search-btn:hover, #forecast-btn:hover, #reset-btn:hover {
+    background-color: #5a6268;
+    
 }
 /* Weather Section */
 .placeholder-img{

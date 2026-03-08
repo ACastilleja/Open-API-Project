@@ -127,6 +127,7 @@ searchBtn.addEventListener('click', async ()=> {
 
 });//end of searchBtn current weather eventlistener
 
+
 //Time formating helper function
 function formatLocalTime(isoString, timezone) {
     const date = new Date(isoString + "Z");
@@ -221,6 +222,17 @@ forecastBtn.addEventListener('click', async ()=> {
 
 
 });//end of forcastBtn eventlistener
+
+//Reset Search Button
+const resetBtn = document.getElementById('reset-btn');
+
+
+resetBtn.addEventListener('click',()=>{
+    beachInput.value = '';
+    weatherContainer.innerHTML = '<div><img src="images/green_dino.jpg" alt="green offline dino placeholder" class="placeholder-img"></div>';
+    console.log ("reset");
+});
+
 
 //helper error dino function
 function errorDino(beachName){
