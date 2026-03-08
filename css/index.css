@@ -97,6 +97,7 @@ h2{
     padding: 40px 20px;
 }
 .localWeather{
+    
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -104,12 +105,11 @@ h2{
     width: 100%;
     margin-top: 20px;
 }
-.localWeather ul{
+
+.weatherCardCurrent ul{
     list-style-type: none;
     padding: 0;
     margin: 0;
-}
-.weatherCard{
     background: white;
     padding: 20px;
     border-radius: 15px;
@@ -117,38 +117,32 @@ h2{
     min-width: 200px;
     text-align: center;
 }
-/* shell border */
-/* #About, #Beach, #Weather{
-    position: relative;
-    padding-bottom: 60px;
-    margin-bottom: 20px;
-    border: none;
+.weatherCard{
+    list-style-type: none;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px black;
+    min-width: 200px;
+    text-align: center;
 }
-#About::after, #Beach::after, #Weather::after{
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width:100%;
-    height: 20px;
-    background-image: url('../images/shell.jpg');
-    background-repeat: repeat-x;
-    background-size: contain;
+/* waiting spinner */
+.loader{
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
 }
-#navigation{
-    position: relative;
-    padding-bottom: 40px;
-    margin-bottom: 20px;
-    border: none;
+/* spinner animation */
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
 }
-#navigation::after{
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width:100%;
-    height: 20px;
-    background-image: url('../images/shell.jpg');
-    background-repeat: repeat-x;
-    background-size: contain;
-} */
+.loading-text {
+    text-align:center;
+    font-family: "Fredoka", sans-serif;
+    color: #555;
+}
