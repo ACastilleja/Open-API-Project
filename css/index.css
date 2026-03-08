@@ -70,7 +70,7 @@ h2{
     flex-direction: column;
     text-align: left;
 }
-#search-btn{
+#search-btn, #forecast-btn{
     flex: 1;
     padding: 12px 20px;
     background-color: #0077be;
