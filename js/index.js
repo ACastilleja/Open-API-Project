@@ -146,6 +146,7 @@ forecastBtn.addEventListener('click', async ()=> {
         const location = await getCoord();
         if(!location) return;
         
+        //Clear weather container
         weatherContainer.innerHTML = "";
         const {latitude,longitude,name,state}=currentCoord;
 
@@ -164,7 +165,7 @@ forecastBtn.addEventListener('click', async ()=> {
         //     const itemTime = new Date(iso).getTime();
         //     return itemTime >= beachNow;
         // });
-        
+
         //working time !
         const beachNowISO = new Date().toLocaleString("sv-SE",{timeZone: weatherData.timezone})
         .replace(' ', 'T')
