@@ -25,10 +25,10 @@ const beachInput = document.getElementById('beach-name');
 const weatherContainer = document.querySelector('.localWeather');
 
 //Geo cordinates finder
-let currentCoord = null;
+// let currentCoord = null;
 
 async function getCoord() {
-    const beachName = beachInput.value;
+    const beachName = beachInput.value.trim();
     if (!beachName) {
         weatherContainer.textContent = "Please type in a beach name."
         return;
@@ -68,10 +68,8 @@ searchBtn.addEventListener('click', async ()=> {
 
         //Getting Geocoordinates with helper function
         const location = await getCoord();
-        if(!location){
-            weatherContainer.textContent = "Beach not found please try again";
-            return;
-        }
+        if(!location) return;
+
         const {latitude,longitude,name,state}=currentCoord;
         try{
         // Current Weather API
@@ -129,31 +127,59 @@ searchBtn.addEventListener('click', async ()=> {
 
 });//end of searchBtn current weather eventlistener
 
+//Time formating helper function
+function formatLocalTime(isoString, timezone) {
+    const date = new Date(isoString + "Z");
+    return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+        timeZone: 'UTC'
+
+    });
+}
+
 //Eventlistener of forcastBtn for 5hr forcasteweather
 forecastBtn.addEventListener('click', async ()=> {
 
         //Getting Geocoordinates with helper function
         const location = await getCoord();
-        if(!location){
-            weatherContainer.textContent = "Beach not found please try again";
-            return;
-        }
+        if(!location) return;
+        
+        weatherContainer.innerHTML = "";
         const {latitude,longitude,name,state}=currentCoord;
+
         try{
         // Current Weather API
-        const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation_probability,temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover,uv_index&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
+        const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation_probability,temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover,uv_index&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch&forecast_days=2`);
         const weatherData = await weatherRes.json();
-        console.log(weatherData);
         
+        // getting current time in the beach time and making sure it will work during daylight saving switch
+        // const now = new Date();
+        // const beachTimeStr = now.toLocaleString("en-US",{timeZone: weatherData.timezone});
+        // const beachNow = new Date(beachTimeStr).getTime();
+
+        //finding index of closest now for beach
+        // const startIndex = weatherData.hourly.time.findIndex(iso =>{
+        //     const itemTime = new Date(iso).getTime();
+        //     return itemTime >= beachNow;
+        // });
         
-        //Creating ul list element
-        const weatherList = document.createElement('ul');
-        const currentHour = new Date().getHours();
+        //working time !
+        const beachNowISO = new Date().toLocaleString("sv-SE",{timeZone: weatherData.timezone})
+        .replace(' ', 'T')
+        .substring(0,13) + ":00";
+        const startIndex = weatherData.hourly.time.findIndex(t=>t.startsWith(beachNowISO));
+        
+        const currentHour = startIndex !== -1 ? startIndex : 0;
+
         //looping through the next 5-hrs forecast
         for (let i=currentHour; i<currentHour+5; i++){
-            const time = new Date(weatherData.hourly.time[i]).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+            const timeValue = weatherData.hourly.time[i];
 
+            
             //Weather variables
+            const time = formatLocalTime(timeValue, weatherData.timezone);
             console.log(`Time: ${time}`);
             const temp = weatherData.hourly.temperature_2m[i];
             console.log(`Temperature: ${temp}F`);
@@ -168,7 +194,9 @@ forecastBtn.addEventListener('click', async ()=> {
             const hourlyUV = weatherData.hourly.uv_index[i];
             console.log(`UV Index: ${hourlyUV}`);
             
-        
+            //creating ul list
+            const weatherList = document.createElement('ul');
+            weatherList.classList.add("weatherCard");
         
     
             //Creating data array to use with for Each loop
@@ -190,10 +218,10 @@ forecastBtn.addEventListener('click', async ()=> {
                 weatherList.appendChild(li);
             });
 
-            //appending Weatherlist li list to HTML and adding a class for css
-            weatherContainer.textContent = '';
-            weatherContainer.appendChild(weatherList);
-            weatherContainer.classList.add("weatherCard"); 
+            //appending Weatherlist li list to HTML 
+            
+            weatherContainer.appendChild(weatherList);     
+            
         }
     } catch (error){
         console.log("Error",error);
