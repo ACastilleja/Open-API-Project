@@ -76,7 +76,10 @@ searchBtn.addEventListener('click', async ()=> {
         const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=precipitation_probability,temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover,uv_index&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
         const weatherData = await weatherRes.json();
         console.log(weatherData);
-        
+        //Current Time
+        const timeValue = weatherData.current.time;
+        const time = formatLocalTime(timeValue, weatherData.timezone);
+        console.log(`Time: ${time}`);
         //Weather variables
         const temp = weatherData.current.temperature_2m;
         console.log(`Temperature: ${temp}F`);
@@ -94,10 +97,12 @@ searchBtn.addEventListener('click', async ()=> {
         
         //Creating ul list element
         const weatherList = document.createElement('ul');
-    
+        weatherList.classList.add("weatherCardCurrent");
+        
         //Creating data array to use with for Each loop
-        const displayData = [
+        const displayData = [           
             `Location: ${name}, ${state}`,
+            `Time: ${time}`,
             `Temperature: ${temp}°F`,
             `Real Feel: ${realFeel}°F`,
             `Wind Gust: ${gust}mph`,
@@ -116,7 +121,7 @@ searchBtn.addEventListener('click', async ()=> {
         //appending Weatherlist li list to HTML and adding a class for css
         weatherContainer.textContent = '';
         weatherContainer.appendChild(weatherList);
-        weatherContainer.classList.add("weatherCardCurrent"); 
+        
 
     } catch (error){
         console.log("Error",error);

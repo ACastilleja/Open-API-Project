@@ -1,5 +1,8 @@
 /* General body css */
 body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,12 +25,21 @@ h2{
     align-items: center;
     width: 100%;
 }
-
+.Banner-image img{
+    width: 100%;
+    height: auto;
+    
+}
 /* Navigation Section */
 #navigation{
     display: flex;
     justify-content: center;
-    background-color: lightblue;
+    background-color: rgba(255,255,255,0.8);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rbga(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     gap: 60px;
     padding: 20px;
     /* margin-top: 10px; */
@@ -46,6 +58,10 @@ h2{
     height: 300px;
     object-fit: cover;
 } 
+#About{
+    margin: 2rem;
+    max-width: 1020px;;
+}
 /* Beach Section */
 #Beach{
     display: flex;
@@ -109,12 +125,15 @@ h2{
     width: 100%;
     margin-top: 20px;
 }
-
-.weatherCardCurrent ul{
+ul{
+background: rgba(255,255,255,0.7);  
+}
+.weatherCardCurrent, ul{
     list-style-type: none;
     padding: 0;
     margin: 0;
-    background: white;
+    background: rgba(255,255,255,0.7);
+    
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 15px black;
@@ -124,12 +143,14 @@ h2{
 .weatherCard{
     list-style-type: none;
     background: white;
+    
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 15px black;
     min-width: 200px;
     text-align: center;
 }
+
 /* waiting spinner */
 .loader{
     border: 4px solid #f3f3f3;
@@ -149,4 +170,41 @@ h2{
     text-align:center;
     font-family: "Fredoka", sans-serif;
     color: #555;
+}
+/* Responsive Tablets and small screens */
+@media (max-width: 680px){
+    #navigation{
+        gap: 20px;
+        padding: 15px;
+    }
+    .nav{
+        font-size: 1.2rem;
+    }
+    #Beach {
+        width: 90%;
+        padding: 30px 15px;
+    }
+    .About_image img{
+        height: 200px;
+    }
+    .Banner-image img{
+        max-height: 250px;
+        
+    }
+    
+}
+/* Responsive for mobile phones */
+@media (max-width: 480px) {
+    .localWeather{
+        flex-direction: column;
+        align-items: center;
+    }
+    .weatherCard, .weatherCardCurrent {
+        width: 100%;
+        max-width: 300px;
+    }
+    #beach-name{
+        width: 100%;
+    }
+
 }
