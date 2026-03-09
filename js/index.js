@@ -30,11 +30,11 @@ const weatherContainer = document.querySelector('.localWeather');
 async function getCoord() {
     const beachName = beachInput.value.trim();
     if (!beachName) {
-        weatherContainer.textContent = "Please type in a beach name."
+        errorDino(beachName);
         return;
         
     }
-    
+    showLoading();
     try{
         // Geolocation API
         const geoRes = await fetch (`https://geocoding-api.open-meteo.com/v1/search?name=${beachName}&count=1&language=en&format=json&countryCode=US`);
@@ -42,7 +42,7 @@ async function getCoord() {
         console.log(geoData);
 
         if(!geoData.results){
-            weatherContainer.textContent = "Beach not found please try again";
+            errorDino(beachName);
             return;
         }
 
@@ -76,7 +76,10 @@ searchBtn.addEventListener('click', async ()=> {
         const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=precipitation_probability,temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover,uv_index&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
         const weatherData = await weatherRes.json();
         console.log(weatherData);
-        
+        //Current Time
+        const timeValue = weatherData.current.time;
+        const time = formatLocalTime(timeValue, weatherData.timezone);
+        console.log(`Time: ${time}`);
         //Weather variables
         const temp = weatherData.current.temperature_2m;
         console.log(`Temperature: ${temp}F`);
@@ -94,10 +97,12 @@ searchBtn.addEventListener('click', async ()=> {
         
         //Creating ul list element
         const weatherList = document.createElement('ul');
-    
+        weatherList.classList.add("weatherCardCurrent");
+        
         //Creating data array to use with for Each loop
-        const displayData = [
+        const displayData = [           
             `Location: ${name}, ${state}`,
+            `Time: ${time}`,
             `Temperature: ${temp}°F`,
             `Real Feel: ${realFeel}°F`,
             `Wind Gust: ${gust}mph`,
@@ -116,7 +121,7 @@ searchBtn.addEventListener('click', async ()=> {
         //appending Weatherlist li list to HTML and adding a class for css
         weatherContainer.textContent = '';
         weatherContainer.appendChild(weatherList);
-        weatherContainer.classList.add("weatherCard"); 
+        
 
     } catch (error){
         console.log("Error",error);
@@ -126,6 +131,7 @@ searchBtn.addEventListener('click', async ()=> {
 
 
 });//end of searchBtn current weather eventlistener
+
 
 //Time formating helper function
 function formatLocalTime(isoString, timezone) {
@@ -155,18 +161,7 @@ forecastBtn.addEventListener('click', async ()=> {
         const weatherRes = await fetch (`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=precipitation_probability,temperature_2m,apparent_temperature,wind_gusts_10m,cloud_cover,uv_index&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch&forecast_days=2`);
         const weatherData = await weatherRes.json();
         
-        // getting current time in the beach time and making sure it will work during daylight saving switch
-        // const now = new Date();
-        // const beachTimeStr = now.toLocaleString("en-US",{timeZone: weatherData.timezone});
-        // const beachNow = new Date(beachTimeStr).getTime();
-
-        //finding index of closest now for beach
-        // const startIndex = weatherData.hourly.time.findIndex(iso =>{
-        //     const itemTime = new Date(iso).getTime();
-        //     return itemTime >= beachNow;
-        // });
-
-        //working time !
+        //Local Beach time 
         const beachNowISO = new Date().toLocaleString("sv-SE",{timeZone: weatherData.timezone})
         .replace(' ', 'T')
         .substring(0,13) + ":00";
@@ -220,7 +215,7 @@ forecastBtn.addEventListener('click', async ()=> {
             });
 
             //appending Weatherlist li list to HTML 
-            
+
             weatherContainer.appendChild(weatherList);     
             
         }
@@ -233,9 +228,31 @@ forecastBtn.addEventListener('click', async ()=> {
 
 });//end of forcastBtn eventlistener
 
+//Reset Search Button
+const resetBtn = document.getElementById('reset-btn');
 
 
+resetBtn.addEventListener('click',()=>{
+    beachInput.value = '';
+    weatherContainer.innerHTML = '<div><img src="images/green_dino.jpg" alt="green offline dino placeholder" class="placeholder-img"></div>';
+    console.log ("reset");
+});
 
+
+//helper error dino function
+function errorDino(beachName){
+    if (!beachName){
+    weatherContainer.innerHTML = '<div class ="error-message"><p>Oops! Please type in a Beach Name!</p><img src="images/Confused_dino.jpg" alt="Error placeholder" class="placeholder-img"></div>'; 
+    }else {
+    weatherContainer.innerHTML = '<div class ="error-message"><p>Oops! Beach not found please try again!</p><img src="images/Confused_dino.jpg" alt="Error placeholder" class="placeholder-img"></div>';
+    };
+};
+
+//helper spinner function
+function showLoading(){
+    weatherContainer.innerHTML = '<div class="loader"></div><p class="loading-text">Catching some Data waves...</p>';
+    return;
+};
 
 
 
